@@ -1,5 +1,6 @@
 #vou importar a classe Flask do pacote flask
-from flask import Flask
+#o make_response geralmente gera em JSON
+from flask import Flask,make_response,jsonify,request
 from dados import Materias
 
 #FIXME: Flask é um classe
@@ -12,7 +13,23 @@ app = Flask("__name__")
 #POST(inserir),PUT(atualizar),GET,DELETE
 @app.route('/materias',methods=['GET'])
 def get_materias():
-    return Materias
+    #response
+    return make_response(
+        jsonify(Materias)
+    ) 
+
+@app.route("/")
+def index():
+    return "Projeto Integrador Base (Enem)"
+
+
+#request
+#POST
+@app.route('/materias',methods=['POST'])
+def create_materia():
+    materia = request.json
+    return materia
+
 
 #executar a API
 app.run()
